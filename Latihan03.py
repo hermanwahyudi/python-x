@@ -18,5 +18,6 @@ class Latihan03:
 if(__name__ == "__main__"):
 	obj = Latihan03()
 	input1 = input("Masukan angka : ")
+	
 	print(obj.toBinary(int(input1)))
-	# print(obj)
+	
