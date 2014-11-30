@@ -20,4 +20,4 @@ if(__name__ == "__main__"):
 	input1 = input("Masukan angka : ")
 	
 	print(obj.toBinary(int(input1)))
-	
+	print("hello")
