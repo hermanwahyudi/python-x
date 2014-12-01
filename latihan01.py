@@ -5,7 +5,7 @@ from collections import deque
 class Latihan01:
 	arr = [2, 6, 3, 7, 1, 4]
 	def __init__(self):
-		return
+		return None
 	def search(self, x):
 		for i in range(len(Latihan01.arr)):
 			if Latihan01.arr[i] == x:
