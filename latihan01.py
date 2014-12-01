@@ -25,6 +25,8 @@ class Latihan01:
 		for i in range(2, 10):
 			self.fib.append(self.fib[i-2]+self.fib[i-1])
 		return self.fib
+	def __str__(self):
+		return "Ini kelas Latihan01"
 			
 # main
 
