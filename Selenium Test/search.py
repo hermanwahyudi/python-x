@@ -1,31 +1,15 @@
-import unittest
-
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 
-class SearchPage(unittest.TestCase):
+class Search:
 	def __init__(self):
-		return None
-
-	def setUp(self):
-		self.driver = webdriver.Firefox() 
-
-	def search(self):
-		driver = self.driver
-		driver.get("https://tokopedia.com/")
-		elem = driver.find_element_by_name("search_keyword")
-		elem.send_keys("Nokia")
-		assert "No result found." not in driver.page_source
-		elem.send_keys(Keys.RETUNR)
-
-
-	def tearDown(self):
-		self.driver.close()
-
-	def __str__(self):
-		return "Class Search"
-
+		self.browser = webdriver.Firefox()
+		self.browser.get("https://tokopedia.com/")
+	
+	def searchTkpd(self, sesuatu):
+		self.browser.find_element_by_name("search_keyword").send_keys(sesuatu)
+		self.browser.find_element_by_class_name("btn-search").click()
 # main
 
 if(__name__ == "__main__"):
-	unittest.main()
+	obj = Search()
+	obj.searchTkpd("Toko QC 14")
