@@ -18,6 +18,7 @@ class SearchPage(unittest.TestCase):
 		assert "No result found." not in driver.page_source
 		elem.send_keys(Keys.RETUNR)
 
+
 	def tearDown(self):
 		self.driver.close()
 
@@ -25,5 +26,6 @@ class SearchPage(unittest.TestCase):
 		return "Class Search"
 
 # main
+
 if(__name__ == "__main__"):
 	unittest.main()
