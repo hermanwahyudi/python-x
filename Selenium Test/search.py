@@ -7,7 +7,10 @@ class Search:
 	
 	def searchTkpd(self, sesuatu):
 		self.browser.find_element_by_name("search_keyword").send_keys(sesuatu)
-		self.browser.find_element_by_class_name("btn-search").click()
+		self.browser.find_element_by_css_selector("button.btn-search").click()
+		self.browser.find_element_by_id("tab-shop").click()
+
+
 # main
 
 if(__name__ == "__main__"):
