@@ -16,17 +16,21 @@ class Etalase:
 	def addEtalase(self):
 		i = 0
 		while i < 100:
-			rand = randint(100000, 999999)
+			rand = randint(10000000, 99999999)
+			self.browser.implicitly_wait(1)
 			self.browser.find_element_by_id("btn-add").click()
 			self.browser.find_element_by_name("e_name").send_keys(rand)
 			self.browser.find_element_by_css_selector("button.btn-action").click()
-
+			self.browser.get("https://test.tokopedia.nginx/myshop-etalase.pl")
 			i += 1 
-			self.browser.implicitly_wait(2)
-			self.browser.back()
+
+	def deleteEtalase(self):
+		self.browser.find_element_by_css_selector("a.delete-etalase").click()
+		self.browser.find_element_by_name("submit").click()
 
 # main
 
 if(__name__ == "__main__"):
 	 obj = Etalase()
-	 obj.addEtalase()
+	 # obj.addEtalase()
+	 obj.deleteEtalase()
