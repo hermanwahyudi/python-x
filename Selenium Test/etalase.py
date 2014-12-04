@@ -1,5 +1,6 @@
 from selenium import webdriver
 from random import randint
+from selenium.webdriver.common.by import By
 
 class Etalase:
 	def __init__(self):
@@ -26,12 +27,15 @@ class Etalase:
 			i += 1 
 
 	def deleteEtalase(self):
-		self.browser.find_element_by_css_selector("a.delete-etalase").click()
-		self.browser.find_element_by_name("submit").click()
+		for i in range(10):
+			self.browser.find_element_by_css_selector("a.delete-etalase").click()
+			self.browser.implicitly_wait(6)
+			self.browser.find_element_by_xpath("//button[@name='submit']").click()
+			self.browser.get("https://test.tokopedia.nginx/myshop-etalase.pl")
 
 # main
 
 if(__name__ == "__main__"):
 	 obj = Etalase()
 	 obj.addEtalase()
-	 # obj.deleteEtalase()
+	 obj.deleteEtalase()
