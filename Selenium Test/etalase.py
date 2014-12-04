@@ -3,7 +3,8 @@ from random import randint
 
 class Etalase:
 	def __init__(self):
-		self.browser = webdriver.Firefox()
+		#self.browser = webdriver.Firefox()
+		self.browser = webdriver.Chrome('chromedriver')
 		self.browser.get("https://test.tokopedia.nginx/myshop-etalase.pl")
 		self.doLogin()
 	
@@ -32,5 +33,5 @@ class Etalase:
 
 if(__name__ == "__main__"):
 	 obj = Etalase()
-	 # obj.addEtalase()
-	 obj.deleteEtalase()
+	 obj.addEtalase()
+	 # obj.deleteEtalase()
