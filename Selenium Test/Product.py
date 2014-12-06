@@ -4,19 +4,26 @@ from selenium.webdriver.common.by import By
 import os
 
 class Product:
+	index_url = "https://test.tokopedia.nginx/"
+	shop_url = index_url + "tokoqc14" 
+	product_add_url = index_url + "product-add.pl"
 	
-	#Dictionary
-	dict1 = {}
+	# locators
+	dict1 = {
+		"email" : "tkpd.qc+13@gmail.com",
+		"password" : "1234asdf",
+	}
 
 	def __init__(self):
-		self.browser = webdriver.Firefox()
-		self.browser.get("https://test.tokopedia.nginx/")
-		self.doLogin()
+		self.browser = webdriver.Chrome("chromedriver")
+
+	def open(self):
+		self.browser.get(self.index_url)
 	
-	def doLogin(self):
+	def do_login(self):
 		self.browser.find_element_by_link_text("Masuk").click()
-		self.browser.find_element_by_name("email").send_keys("tkpd.qc+13@gmail.com")
-		self.browser.find_element_by_name("pwd").send_keys("1234asdf")
+		self.browser.find_element_by_name("email").send_keys(self.dict1["email"])
+		self.browser.find_element_by_name("pwd").send_keys(self.dict1["password"])
 		self.browser.find_element_by_class_name("btn-login-top").click()
 		self.browser.implicitly_wait(5)
 
@@ -38,4 +45,5 @@ class Product:
 
 if(__name__ == "__main__"):
 	obj = Product()
-	obj.addProduct()
+	obj.open()
+	obj.do_login()
