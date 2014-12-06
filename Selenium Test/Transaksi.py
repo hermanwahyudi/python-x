@@ -1,6 +1,8 @@
 from selenium import webdriver
 from random import randint
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import os
 
 class Transaksi:
@@ -20,22 +22,25 @@ class Transaksi:
 	}
 
 	def __init__(self):
-		self.browser = webdriver.Chrome("chromedriver")
+		self.browser = webdriver.Firefox()
 	
 	def open(self, url):
 		self.browser.get(url)
 
 	def do_login(self):
-		self.browser.find_element_by_link_text("Masuk").click()
-		self.browser.find_element_by_name("email").send_keys(self.dict['email'])
-		self.browser.find_element_by_name("pwd").send_keys(self.dict['password'])
-		self.browser.find_element_by_class_name("btn-login-top").click()
-		self.browser.implicitly_wait(5)
+		try:
+			self.browser.find_element_by_link_text("Masuk").click()
+			self.browser.find_element_by_name("email").send_keys(self.dict['email'])
+			self.browser.find_element_by_name("pwd").send_keys(self.dict['password'])
+			self.browser.find_element_by_class_name("btn-login-top").click()
+			self.browser.implicitly_wait(5)
+		except Exception as inst:
+			print(inst)
 
 	def go_to_shop(self):
 		length_shop = len(self.domain_shop)
 		rand = randint(0, length_shop-1)
-		self.open(self.dict['index_url'] + self.domain_shop[rand])
+		self.open(self.dict['index_url'] + self.domain_shop[1])
 
 	def choose_product(self):
 		self.go_to_shop()
@@ -55,23 +60,33 @@ class Transaksi:
 			print("Tidak ada Produk di Toko", self.browser.title)
 	
 	def add_to_cart(self):
-		self.browser.implicitly_wait(5)
-		var = self.browser.find_element(By.ID, "btn-atc").click()
-		randNotes = randint(1000000000000, 100000000000000)
-		self.browser.find_element(By.ID, "notes").send_keys(randNotes)
-
-	def transact_deposit(self):
-		return None
+		try:
+			element = WebDriverWait(self.browser, 10).until(
+				EC.presence_of_element_located((By.ID, "btn-atc"))
+			)
+			element.click()
+			self.browser.find_element(By.ID, "min-order").clear()
+			self.browser.find_element(By.ID, "min-order").send_keys(randint(1, 2))
+			self.browser.find_element(By.ID, "notes").send_keys(randint(1000000000, 10000000000))
+			self.browser.find_element(By.XPATH, "//select[@name='shipping_agency']/option[2]").click()
+			self.browser.find_element(By.CSS_SELECTOR, "button.btn-buy").click()
+		except Exception as inst:
+			print(inst)
 		
-		#
-		#randNotes = randint(1000000000000, 100000000000000)
 		#self.browser.find_element(By.ID, "notes").send_keys(randNotes)
-		#self.browser.find_element(By.CSS_SELECTOR, "button.btn-buy").click()
-		#self.browser.implicitly_wait(5)
-		#self.browser.find_element(By.ID, "input-gateway-0").click()
-		#self.browser.implicitly_wait(5)
-		#var = self.browser.find_element_by_id("btn-checkout").click()
-		#print(var)
+
+	def checkout_with_deposit(self):
+		try:
+			element1 = WebDriverWait(self.browser, 10).until(
+				EC.presence_of_element_located((By.ID, "input-gateway-0"))
+			)
+			element1.click()
+			element2 = WebDriverWait(self.browser, 30).until(
+				EC.presence_of_element_located((By.ID, "btn-checkout"))
+			)
+			element2.click()
+		except Exception as inst:
+			print(inst)
 
 # main
 
@@ -80,4 +95,5 @@ if(__name__ == "__main__"):
 	obj.open(obj.dict['index_url'])
 	obj.do_login()
 	obj.choose_product()
+	obj.checkout_with_deposit()
 	
