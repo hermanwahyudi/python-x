@@ -2,7 +2,7 @@ from selenium import webdriver
 from random import randint
 from selenium.webdriver.common.by import By
 
-class Etalase:
+class MyshopEtalase:
 	def __init__(self):
 		self.browser = webdriver.Firefox()
 		#self.browser = webdriver.Chrome('chromedriver')
@@ -37,6 +37,6 @@ class Etalase:
 # main
 
 if(__name__ == "__main__"):
-	 obj = Etalase()
+	 obj = MyshopEtalase()
 	 obj.addEtalase()
 	 obj.deleteEtalase()

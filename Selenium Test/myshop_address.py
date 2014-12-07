@@ -3,7 +3,7 @@ from random import randint
 from selenium.webdriver.common.by import By
 import os
 
-class Address:
+class MyshopAddress:
 	
 	#Dictionary
 	dict1 = {}
@@ -51,7 +51,7 @@ class Address:
 		self.browser.find_element(By.XPATH, "//button[@id='s-save-prod']").click()
 
 if(__name__ == "__main__"):
-	obj = Address()
+	obj = MyshopAddress()
 	obj.uploadImage()
 	#obj.inputAddress()
 	#obj.deleteEtalase()
