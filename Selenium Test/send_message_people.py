@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 
 class SendMessagePeople:
 	def __init__(self):
-		self.browser = webdriver.Firefox()
+		self.browser = webdriver.Chrome("chromedriver")
 		self.browser.get("http://new.tkpdevel-pg.ryandy")
 		self.doLogin()
 		self.browser.implicitly_wait(1)

@@ -87,7 +87,7 @@ class Transaksi:
 			element2 = WebDriverWait(self.browser, 10).until(
 				EC.visibility_of_element_located((By.CSS_SELECTOR, "button.go_to_step_1"))
 			)
-			#time.sleep(5)
+			time.sleep(5)
 			element2.click()
 		except Exception as inst:
 			print(inst)

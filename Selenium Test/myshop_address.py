@@ -1,7 +1,7 @@
 from selenium import webdriver
 from random import randint
 from selenium.webdriver.common.by import By
-import os
+import os, time
 
 class MyshopAddress:
 	
@@ -37,22 +37,20 @@ class MyshopAddress:
 			self.browser.implicitly_wait(5)
 			op2 = self.browser.find_element(By.ID, 'kota')
 			op2.find_element(By.XPATH, "//select/option[@value='259']").click()
-			self.browser.implicitly_wait(19)
+			time.sleep(1)
 			op3 = self.browser.find_element(By.ID, 'kec')
 			print(i)
-			op3.find_element(By.XPATH, "//select/option[@value='3628']").click()
+			op3.find_element(By.XPATH, "//select/option[@value='3632']").click()
 			# self.browser.find_element(By.XPATH, '//button[text()="Diskusi"]').click()
 			self.browser.find_element(By.ID, 'kontak').send_keys(rand01)
 			self.browser.find_element_by_xpath("//button[@name='submit']").click()
 			i += 1 
-	def uploadImage(self):
-		self.browser.get("https://test.tokopedia.nginx/product-add.pl")
-		self.browser.find_element_by_id("pickfiles").send_keys(os.getcwd()+"Desert.jpg")
-		self.browser.find_element(By.XPATH, "//button[@id='s-save-prod']").click()
+	def delete_address(self):
+		return None
 
 if(__name__ == "__main__"):
 	obj = MyshopAddress()
-	obj.uploadImage()
-	#obj.inputAddress()
+	#obj.uploadImage()
+	obj.inputAddress()
 	#obj.deleteEtalase()
 	#print(os.getcwd())
