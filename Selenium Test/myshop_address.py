@@ -39,7 +39,8 @@ class MyshopAddress:
 					op1[i].click()
 			
 			self.browser.implicitly_wait(5)
-			op2 = self.browser.find_element(By.ID, 'kota')
+			op2 = self.browser.find_elements(By.ID, 'kota')
+			
 			op2.find_element(By.XPATH, "//select/option[@value='259']").click()
 			time.sleep(1)
 			op3 = self.browser.find_element(By.ID, 'kec')
