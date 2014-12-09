@@ -37,15 +37,22 @@ class MyshopAddress:
 			for i in range(len(op1)-1):
 				if i == rand:
 					op1[i].click()
-			
+					break
 			self.browser.implicitly_wait(5)
 			op2 = self.browser.find_elements(By.ID, 'kota')
-			
-			op2.find_element(By.XPATH, "//select/option[@value='259']").click()
+			rand = randint(0, len(op2)-1)
+			for i in range(len(op2)-1):
+				if i == rand:
+					op2[i].click()
+					break
 			time.sleep(1)
-			op3 = self.browser.find_element(By.ID, 'kec')
+			op3 = self.browser.find_elements(By.ID, 'kec')
+			rand = randint(0, len(op3)-1)
+			for i in range(len(op3)-1):
+				if i == rand:
+					op3[i].click()
+					break
 			print(i)
-			op3.find_element(By.XPATH, "//select/option[@value='3632']").click()
 			# self.browser.find_element(By.XPATH, '//button[text()="Diskusi"]').click()
 			self.browser.find_element(By.ID, 'kontak').send_keys(rand01)
 			self.browser.find_element_by_xpath("//button[@name='submit']").click()
@@ -64,6 +71,6 @@ class MyshopAddress:
 if(__name__ == "__main__"):
 	obj = MyshopAddress()
 	#obj.uploadImage()
-	#obj.inputAddress()
-	obj.delete_address()
+	obj.inputAddress()
+	#obj.delete_address()
 	#print(os.getcwd())
