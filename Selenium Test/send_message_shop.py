@@ -15,9 +15,9 @@ class SendMessageShop:
 		self.browser.find_element_by_class_name("btn-login-top").click()
 
 	def sendMsg(self):
+		self.browser.get("https://test.tokopedia.nginx/tokoqc14")
 		i = 0
 		while i < 1000:
-			self.browser.get("https://test.tokopedia.nginx/tokoqc14")
 			rand01 = randint(10000000, 99999999)
 			rand02 = randint(10000000000, 100000000000)
 			self.browser.implicitly_wait(1)
@@ -25,7 +25,7 @@ class SendMessageShop:
 			self.browser.find_element_by_id("message-subject").send_keys(rand01)
 			self.browser.find_element_by_id("message").send_keys(rand02)
 			self.browser.find_element(By.XPATH, '//button[text()="Kirim"]').click()
-			
+			self.browser.refresh()
 			i += 1 
 
 # main

@@ -32,8 +32,12 @@ class MyshopAddress:
 			self.browser.find_element(By.ID, 'receiver_name').send_keys(rand01 + rand02)
 			self.browser.find_element(By.ID, 'alamat').send_keys(rand01*2)
 			self.browser.find_element(By.ID, 'postal_code').send_keys(rand01*2)
-			op1 = self.browser.find_element(By.ID, 'provinsi')
-			op1.find_element_by_xpath("//select/option[@value='17']").click()
+			op1 = self.browser.find_elements(By.ID, 'provinsi')
+			rand = randint(0, len(op1)-1)
+			for i in range(len(op1)-1):
+				if i == rand:
+					op1[i].click()
+			
 			self.browser.implicitly_wait(5)
 			op2 = self.browser.find_element(By.ID, 'kota')
 			op2.find_element(By.XPATH, "//select/option[@value='259']").click()
@@ -46,11 +50,19 @@ class MyshopAddress:
 			self.browser.find_element_by_xpath("//button[@name='submit']").click()
 			i += 1 
 	def delete_address(self):
-		return None
+		self.browser.get("https://test.tokopedia.nginx/people/1601633/address")
+		try :
+			for i in range(100):
+				self.browser.find_element(By.LINK_TEXT, "Hapus").click()
+				time.sleep(1)
+				self.browser.find_element(By.XPATH, "//button[text()='Ya']").submit()
+				self.browser.refresh()
+		except Exception as inst:
+			print(inst)
 
 if(__name__ == "__main__"):
 	obj = MyshopAddress()
 	#obj.uploadImage()
-	obj.inputAddress()
-	#obj.deleteEtalase()
+	#obj.inputAddress()
+	obj.delete_address()
 	#print(os.getcwd())
