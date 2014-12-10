@@ -5,17 +5,17 @@ from selenium.webdriver.common.by import By
 class SendMessageShop:
 	def __init__(self):
 		self.browser = webdriver.Firefox()
-		self.browser.get("https://test.tokopedia.nginx/")
+		self.browser.get("https://tokopedia.dev/")
 		self.doLogin()
 	
 	def doLogin(self):
 		self.browser.find_element_by_link_text("Masuk").click()
 		self.browser.find_element_by_name("email").send_keys("tkpd.qc+13@gmail.com")
-		self.browser.find_element_by_name("pwd").send_keys("1234asdf")
+		self.browser.find_element_by_name("pwd").send_keys("rubikholic19")
 		self.browser.find_element_by_class_name("btn-login-top").click()
 
 	def sendMsg(self):
-		self.browser.get("https://test.tokopedia.nginx/tokoqc14")
+		self.browser.get("https://tokopedia.dev/tokoqc15")
 		i = 0
 		while i < 1000:
 			rand01 = randint(10000000, 99999999)

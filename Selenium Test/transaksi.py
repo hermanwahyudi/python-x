@@ -1,30 +1,28 @@
+from base import BasePage
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
-from random import randint
-import os, time
+import os, time, sys
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/'))
 
-class Transaksi:
+class Transaksi(BasePage):
 	
 	# list domain toko
 	domain_shop = ['tokoqc14', 'tokoqc15', 'tokoqc16']
 	
 	# dictionary
 	dict = {
-		"index_url" : "https://test.tokopedia.nginx/",
+		"index_url" : "https://tokopedia.com/",
 		"email" : "tkpd.qc+13@gmail.com",
 		"password" : "1234asdf"
 	}
 
-	locators = {
-		"atc" : "btn-atc"
-	}
-
-	def __init__(self):
+	def __init__(self, payment):
 		self.browser = webdriver.Firefox()
+		self.payment = payment
 	
 	def open(self, url):
 		self.browser.get(url)
@@ -70,20 +68,43 @@ class Transaksi:
 			self.browser.find_element(By.ID, "min-order").clear()
 			self.browser.find_element(By.ID, "min-order").send_keys(randint(1, 2))
 			self.browser.find_element(By.ID, "notes").send_keys(randint(1000000000, 10000000000))
-			#list_kurir = self.browser.find_elements(By.XPATH, "//select[@name='shipping_agency']")
-			self.browser.find_element(By.XPATH, "//select[@name='shipping_agency']/option[2]").click()
-			self.browser.find_element(By.CSS_SELECTOR, "button.btn-buy").click()
+			self.choose_kurir()
+			self.browser.find_element(By.CSS_SELECTOR, "button.btn-buy").submit()
 		except Exception as inst:
 			print(inst)
 		
 		#self.browser.find_element(By.ID, "notes").send_keys(randNotes)
+	def choose_kurir(self):
+		list_shipping_agency = self.browser.find_elements(By.XPATH, "//select[@name='shipping_agency']/option")
+		i = 1
+		while i < len(list_shipping_agency):
+			if i == randint(1, len(list_shipping_agency)):
+				list_shipping_agency[i].click()
+				break
+			i += 1
+		time.sleep(1)
+		list_service_type = self.browser.find_elements(By.XPATH, "//select[@name='shipping_product']/option")
+		for j in range(len(list_service_type)):
+			if j == randint(1, len(list_service_type)):
+				list_service_type[j].click()
+				break
+		time.sleep(1)
 
-	def checkout_with_deposit(self):
+	def choose_payment(self, choose):
+		id_payment = ""
 		try:
+			if choose == "Deposit":
+				id_payment = "input-gateway-0"
+			elif choose == "Bank":
+				id_payment = "input-gateway-1"
 			element1 = WebDriverWait(self.browser, 10).until(
-				EC.presence_of_element_located((By.ID, "input-gateway-0"))
-			)
+					EC.presence_of_element_located((By.ID, id_payment))
+				)
 			element1.click()
+		except Exception as inst:
+			print(inst)
+	def checkout(self):
+		try:
 			element2 = WebDriverWait(self.browser, 10).until(
 				EC.visibility_of_element_located((By.CSS_SELECTOR, "button.go_to_step_1"))
 			)
@@ -92,10 +113,13 @@ class Transaksi:
 		except Exception as inst:
 			print(inst)
 
-	def pay_with_deposit(self):
+	def pay(self, choose):
 		try:
 			time.sleep(3)
-			self.browser.find_element_by_name("password").send_keys(self.dict['password'])
+			if choose == "Deposit":
+				self.browser.find_element_by_name("password").send_keys(self.dict['password'])
+			elif choose == "Bank":
+				pass
 			self.browser.find_element(By.CSS_SELECTOR, "button.btn-buy").submit()
 		except Exception as inst:
 			print(inst)
@@ -103,9 +127,10 @@ class Transaksi:
 # main
 
 if(__name__ == "__main__"):
-	obj = Transaksi()
+	obj = Transaksi("Bank")
 	obj.open(obj.dict['index_url'])
 	obj.do_login()
 	obj.choose_product()
-	obj.checkout_with_deposit()
-	obj.pay_with_deposit()
+	obj.choose_payment(obj.payment)
+	obj.checkout()
+	obj.pay(obj.payment)
